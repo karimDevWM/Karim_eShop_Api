@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\api.Karim_eshop.Data.Context.Contract\api.Karim_eshop.Data.Context.Contract.csproj" />
+    <ProjectReference Include="..\api.Karim_eshop.Data.Repository.Contract\api.Karim_eshop.Data.Repository.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

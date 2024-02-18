@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.25.1" />
+    <PackageReference Include="MimeKit" Version="4.3.0" />
+    <PackageReference Include="Stripe.net" Version="43.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\api.Karim_eshop.Data.Repository.Contract\api.Karim_eshop.Data.Repository.Contract.csproj" />
+    <ProjectReference Include="..\api.Karim_eshop.Business.DTOs\api.Karim_eshop.Business.DTOs.csproj" />
+    <ProjectReference Include="..\api.Karim_eshop.Business.Service.Contract\api.Karim_eshop.Business.Service.Contract.csproj" />
+  </ItemGroup>
+
+</Project>
