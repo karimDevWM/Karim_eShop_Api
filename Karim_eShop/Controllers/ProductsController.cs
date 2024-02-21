@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace Karim_eShop.Controllers
 {
@@ -29,18 +30,17 @@ namespace Karim_eShop.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            _logger = logger ?? throw new ArgumentNullException( nameof(ProductsController));
+            _logger = logger ?? throw new ArgumentNullException(nameof(ProductsController));
         }
 
         [HttpGet]
         public async Task<ActionResult<PagedList<Product>>> GetProducts([FromQuery] ProductParams productParams)
         {
             var query = _context.Products
-                //.Sort(productParams.OrderBy)
-                //.Search(productParams.SearchTerm)
-                //.Filter(productParams.Brands, productParams.Types)
-                .AsQueryable
-                ();
+                .Sort(productParams.OrderBy)
+                .Search(productParams.SearchTerm)
+                .Filter(productParams.Brands, productParams.Types)
+                .AsQueryable();
 
             var products =
                 await PagedList<Product>.ToPagedList(query, productParams.PageNumber, productParams.PageSize);
@@ -51,18 +51,32 @@ namespace Karim_eShop.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProductsWithoutFilters()
+        public async Task<ActionResult<PagedList<Product>>> GetProductsWithoutFilters([FromQuery]ProductParams productParams)
         {
-            //var query = _context.Products
-            //    //.Sort(productParams.OrderBy)
-            //    //.Search(productParams.SearchTerm)
-            //    //.Filter(productParams.Brands, productParams.Types)
-            //    .AsQueryable
-            //    ();
+            var query = _context.Products
+                .Sort(productParams.OrderBy)
+                .Search(productParams.SearchTerm)
+                .Filter(productParams.Brands, productParams.Types)
+                .AsQueryable();
 
-            var products = await _context.Products.ToListAsync();
+            //query = OrderBy switch
+            //{
+            //    "price" => query.OrderBy(p => p.Price),
+            //    "priceDesc" => query.OrderByDescending(p => p.Price),
+            //    _ => query.OrderBy(p => p.Name)
+            //};
+
+            //var products = await _context.Products.ToListAsync();
 
             //Response.AddPaginationHeader(products.MetaData);
+
+            //return await query.ToListAsync();
+
+            var products = await PagedList<Product>.ToPagedList(query, productParams.PageNumber, productParams.PageSize);
+
+            //Response.Headers.Add("Pagination", JsonSerializer.Serialize(products.MetaData));
+
+            Response.AddPaginationHeader(products.MetaData);
 
             return products;
         }
