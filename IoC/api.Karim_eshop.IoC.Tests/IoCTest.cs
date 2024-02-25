@@ -1,7 +1,7 @@
 ﻿using api.Karim_eshop.Data.Context.Contract;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using api.Karim_eshop.IoC.Application;
+//using api.Karim_eshop.IoC.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;

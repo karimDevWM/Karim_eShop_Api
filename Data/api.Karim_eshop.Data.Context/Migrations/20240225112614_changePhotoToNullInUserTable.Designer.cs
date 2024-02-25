@@ -11,14 +11,14 @@ using api.Karim_eshop.Data.Entity;
 namespace api.Karim_eshop.Data.Context.Migrations
 {
     [DbContext(typeof(KarimeshopDbContext))]
-    [Migration("20240213093545_UpdateBasketEntityAndOthersV2")]
-    partial class UpdateBasketEntityAndOthersV2
+    [Migration("20240225112614_changePhotoToNullInUserTable")]
+    partial class changePhotoToNullInUserTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.26")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.Basket", b =>
@@ -60,59 +60,6 @@ namespace api.Karim_eshop.Data.Context.Migrations
                     b.ToTable("BasketItem");
                 });
 
-            modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.OrderAggregate.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("BuyerId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<long>("DeliveryFee")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("OrderStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PaymentIntentId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<long>("Subtotal")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.OrderAggregate.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Price")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItem");
-                });
-
             modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -132,14 +79,14 @@ namespace api.Karim_eshop.Data.Context.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Photo")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PictureUrl")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("PublicId")
-                        .HasColumnType("longtext");
 
                     b.Property<int>("QuantityInStock")
                         .HasColumnType("int");
@@ -151,6 +98,118 @@ namespace api.Karim_eshop.Data.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Brand = "Fluknumbluk",
+                            Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            Name = "Table basse en Or",
+                            PictureUrl = "/images/products/table_basse_or.png",
+                            Price = 20000L,
+                            QuantityInStock = 100,
+                            Type = "table basse"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Brand = "lustrulux",
+                            Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
+                            Name = "Lustre en diamant",
+                            PictureUrl = "/images/products/lustre_diamant.png",
+                            Price = 15000L,
+                            QuantityInStock = 100,
+                            Type = "Lustres"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Brand = "Louis Vuitton",
+                            Description = "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+                            Name = "Peignoir de douche en peau d'ours",
+                            PictureUrl = "/images/products/peignoir_peau_ours.png",
+                            Price = 18000L,
+                            QuantityInStock = 100,
+                            Type = "Vetement mixte"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Brand = "MariLux",
+                            Description = "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+                            Name = "robe de mariée satin bordé en or et diamant",
+                            PictureUrl = "/images/products/robe_marie_or_diamant.png",
+                            Price = 30000L,
+                            QuantityInStock = 100,
+                            Type = "Vetement femme"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Brand = "Tissot",
+                            Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            Name = "Pendule en or",
+                            PictureUrl = "/images/products/pendule_en_or.png",
+                            Price = 25000L,
+                            QuantityInStock = 100,
+                            Type = "Horloge"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Brand = "Lacoste",
+                            Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            Name = "Chaussure peau crocodile",
+                            PictureUrl = "/images/products/chaussure_peau_crocodile.png",
+                            Price = 12000L,
+                            QuantityInStock = 100,
+                            Type = "Chaussure homme"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Brand = "Louis Vuitton",
+                            Description = "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            Name = "Sac en peau de gazelle",
+                            PictureUrl = "/images/products/sac_peau_gazelle.png",
+                            Price = 1000L,
+                            QuantityInStock = 100,
+                            Type = "Maroquinerie mixte"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Brand = "Noblerama",
+                            Description = "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            Name = "Armoire en bois noble",
+                            PictureUrl = "/images/products/armoire_noble.png",
+                            Price = 8000L,
+                            QuantityInStock = 100,
+                            Type = "Mobilier chambre à coucher"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Brand = "Cendrilux",
+                            Description = "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            Name = "Cendrier en or",
+                            PictureUrl = "/images/products/cendrier_en_or.png",
+                            Price = 1500L,
+                            QuantityInStock = 100,
+                            Type = "Divers"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Brand = "Stanwell",
+                            Description = "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+                            Name = "Pipe en bois noble",
+                            PictureUrl = "/images/products/pipe_en_bois_noble.png",
+                            Price = 1800L,
+                            QuantityInStock = 100,
+                            Type = "Divers"
+                        });
                 });
 
             modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.User", b =>
@@ -160,6 +219,9 @@ namespace api.Karim_eshop.Data.Context.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("AddressId")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -196,7 +258,6 @@ namespace api.Karim_eshop.Data.Context.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Photo")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("SecurityStamp")
@@ -211,6 +272,8 @@ namespace api.Karim_eshop.Data.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -219,6 +282,25 @@ namespace api.Karim_eshop.Data.Context.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "244e35ca-b4cd-4381-87e6-1ac94f12fced",
+                            Email = "some-admin-email@nonce.fake",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "some-admin-email@nonce.fake",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAELLHDuXX6tDJlGWX1U2gsPHypRpCT5lwAb7KziVXMQIsobo9nnIGFWt0jiT7kWx5/A==",
+                            PhoneNumberConfirmed = false,
+                            Photo = "admin.png",
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.UserAddress", b =>
@@ -287,17 +369,15 @@ namespace api.Karim_eshop.Data.Context.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d2b99bbc-015f-4130-85f0-7ce4819c001a",
-                            ConcurrencyStamp = "1",
-                            Name = "Admin",
-                            NormalizedName = "Admin"
+                            Id = "d08d768d-f601-47d0-bbe7-d5cd0c14a91d",
+                            Name = "Member",
+                            NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "c72e58c8-3fe0-4fbc-bdfd-3358b77468d0",
-                            ConcurrencyStamp = "2",
-                            Name = "User",
-                            NormalizedName = "User"
+                            Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            Name = "admin",
+                            NormalizedName = "admin"
                         });
                 });
 
@@ -382,6 +462,13 @@ namespace api.Karim_eshop.Data.Context.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            RoleId = "a18be9c0-aa65-4af8-bd17-00bd9344e575"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -422,94 +509,13 @@ namespace api.Karim_eshop.Data.Context.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.OrderAggregate.Order", b =>
+            modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.User", b =>
                 {
-                    b.OwnsOne("api.Karim_eshop.Data.Entity.Model.OrderAggregate.ShippingAddress", "ShippingAddress", b1 =>
-                        {
-                            b1.Property<int>("OrderId")
-                                .HasColumnType("int");
+                    b.HasOne("api.Karim_eshop.Data.Entity.Model.UserAddress", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
 
-                            b1.Property<string>("Address1")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.Property<string>("Address2")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.Property<string>("Country")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.Property<string>("FullName")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.Property<string>("State")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.Property<string>("Zip")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.HasKey("OrderId");
-
-                            b1.ToTable("Orders");
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrderId");
-                        });
-
-                    b.Navigation("ShippingAddress")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.OrderAggregate.OrderItem", b =>
-                {
-                    b.HasOne("api.Karim_eshop.Data.Entity.Model.OrderAggregate.Order", null)
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId");
-
-                    b.OwnsOne("api.Karim_eshop.Data.Entity.Model.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
-                        {
-                            b1.Property<int>("OrderItemId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.Property<string>("PictureUrl")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
-                            b1.Property<int>("ProductId")
-                                .HasColumnType("int");
-
-                            b1.HasKey("OrderItemId");
-
-                            b1.ToTable("OrderItem");
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrderItemId");
-                        });
-
-                    b.Navigation("ItemOrdered")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.UserAddress", b =>
-                {
-                    b.HasOne("api.Karim_eshop.Data.Entity.Model.User", null)
-                        .WithOne("Address")
-                        .HasForeignKey("api.Karim_eshop.Data.Entity.Model.UserAddress", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -566,17 +572,6 @@ namespace api.Karim_eshop.Data.Context.Migrations
             modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.Basket", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.OrderAggregate.Order", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("api.Karim_eshop.Data.Entity.Model.User", b =>
-                {
-                    b.Navigation("Address")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

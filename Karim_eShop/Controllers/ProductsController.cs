@@ -19,16 +19,14 @@ namespace Karim_eShop.Controllers
     {
         private readonly KarimeshopDbContext _context;
         private readonly IMapper _mapper;
-        private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<ProductsController> _logger;
 
-        public ProductsController(KarimeshopDbContext context, IMapper mapper, SignInManager<User> signInManager,
+        public ProductsController(KarimeshopDbContext context, IMapper mapper,
             UserManager<User> userManager, ILogger<ProductsController> logger)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _logger = logger ?? throw new ArgumentNullException(nameof(ProductsController));
         }
@@ -101,7 +99,7 @@ namespace Karim_eShop.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductDto productDto)
         {
 
@@ -152,7 +150,7 @@ namespace Karim_eShop.Controllers
         //    return BadRequest(new ProblemDetails { Title = "Problem updating product" });
         //}
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
