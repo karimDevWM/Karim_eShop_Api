@@ -22,7 +22,7 @@ namespace api.Karim_eshop.Common.Extensions
                     ProductId = item.ProductId,
                     Name = item.Product.Name,
                     Price = item.Product.Price,
-                    PictureUrl = item.Product.Photo,
+                    PictureUrl = item.Product.PictureUrl,
                     Type = item.Product.Type,
                     Brand = item.Product.Brand,
                     Quantity = item.Quantity
