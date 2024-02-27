@@ -14,6 +14,6 @@ namespace api.Karim_eshop.Data.Entity.Model
         public string Type { get; set; }
         public string Brand { get; set; }
         public int QuantityInStock { get; set; }
-        //public string? PublicId { get; set; }
+        public string? PublicId { get; set; }
     }
 }

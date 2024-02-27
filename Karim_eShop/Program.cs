@@ -1,3 +1,4 @@
+using api.Karim_eshop.Business.Service;
 using api.Karim_eshop.Business.Service.Email.Models;
 using api.Karim_eshop.Business.Service.Email.Services;
 using api.Karim_eshop.Common;
@@ -55,6 +56,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<ImageService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

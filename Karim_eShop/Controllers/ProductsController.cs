@@ -21,14 +21,16 @@ namespace Karim_eShop.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<ProductsController> _logger;
+        private readonly ImageService _imageService;
 
         public ProductsController(KarimeshopDbContext context, IMapper mapper,
-            UserManager<User> userManager, ILogger<ProductsController> logger)
+            UserManager<User> userManager, ILogger<ProductsController> logger, ImageService imageService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _logger = logger ?? throw new ArgumentNullException(nameof(ProductsController));
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -98,12 +100,24 @@ namespace Karim_eShop.Controllers
             return Ok(new { brands, types });
         }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductDto productDto)
+        public async Task<ActionResult<Product>> CreateProduct([FromForm] CreateProductDto productDto)
         {
 
             var product = _mapper.Map<Product>(productDto);
+
+            if(productDto.File != null)
+            {
+                var imageResult = await _imageService.AddImageAsync(productDto.File);
+
+                if(imageResult.Error != null)
+                    return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                product.PictureUrl = imageResult.SecureUri.ToString();
+                product.PublicId = imageResult.PublicId;
+            }
 
             _context.Products.Add(product);
 
@@ -112,51 +126,49 @@ namespace Karim_eShop.Controllers
             if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
 
             return BadRequest(new ProblemDetails { Title = "Problem creating new product" });
-
-            //if(_signInManager.IsSignedIn(User))
-            //{
-            //    var user = await _userManager.GetUserAsync(User);
-
-            //    var roles = await _userManager.GetRolesAsync(user);
-
-            //    foreach (var role in roles)
-            //    {
-            //        if (role == "Admin")
-            //        {
-
-            //        }
-            //    }
-            //}
-
-            return Unauthorized();
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpPut]
-        //public async Task<ActionResult<Product>> UpdateProduct([FromForm] UpdateProductDto productDto)
-        //{
-        //    var product = await _context.Products.FindAsync(productDto.Id);
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        public async Task<ActionResult<Product>> UpdateProduct([FromForm] UpdateProductDto productDto)
+        {
+            var product = await _context.Products.FindAsync(productDto.Id);
 
-        //    if (product == null) return NotFound();
+            if (product == null) return NotFound();
 
-        //    _mapper.Map(productDto, product);
+            _mapper.Map(productDto, product);
 
-        //    _mapper.Map(productDto, product);
+            if(productDto.File != null)
+            {
+                var imageResult = await _imageService.AddImageAsync(productDto.File);
 
-        //    var result = await _context.SaveChangesAsync() > 0;
+                if(imageResult.Error != null)
+                    return BadRequest(new ProblemDetails { Title= imageResult.Error.Message });
 
-        //    if (result) return Ok(product);
+                if(!string.IsNullOrEmpty(product.PublicId))
+                    await _imageService.DeleteImageAsync(product.PublicId);
 
-        //    return BadRequest(new ProblemDetails { Title = "Problem updating product" });
-        //}
+                product.PictureUrl = imageResult.SecureUri.ToString();
+                product.PublicId = imageResult.PublicId;
+            }
 
-        [Authorize(Roles = "admin")]
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok(product);
+
+            return BadRequest(new ProblemDetails { Title = "Problem updating product" });
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
 
             if (product == null) return NotFound();
+
+            if (!string.IsNullOrEmpty(product.PublicId))
+                await _imageService.DeleteImageAsync(product.PublicId);
 
             _context.Products.Remove(product);
 

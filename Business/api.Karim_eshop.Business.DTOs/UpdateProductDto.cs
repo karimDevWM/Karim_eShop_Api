@@ -19,10 +19,13 @@ namespace api.Karim_eshop.Business.DTOs
         public string Description { get; set; }
 
         [Required]
-        [Range(100, Double.PositiveInfinity)]
+        [Range(50, Double.PositiveInfinity)]
         public long Price { get; set; }
 
-        public string Photo { get; set; }
+        //[Required]
+        //public string pictureUrl { get; set; }
+
+        public IFormFile File { get; set; }
 
         [Required]
         public string Type { get; set; }
@@ -31,7 +34,7 @@ namespace api.Karim_eshop.Business.DTOs
         public string Brand { get; set; }
 
         [Required]
-        [Range(0, 200)]
+        [Range(50, 200)]
         public int QuantityInStock { get; set; }
     }
 }

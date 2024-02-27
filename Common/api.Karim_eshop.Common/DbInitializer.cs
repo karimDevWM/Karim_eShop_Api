@@ -44,7 +44,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 20000,
-                    PictureUrl = "/images/products/table_basse_or.png",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709030068/edpqnunw2sw4zbdjaayd.jpg",
                     Brand = "Fluknumbluk",
                     Type = "table basse",
                     QuantityInStock = 100
@@ -54,7 +54,7 @@ namespace api.Karim_eshop.Common
                     Name = "Lustre en diamant",
                     Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
                     Price = 15000,
-                    PictureUrl = "/images/products/lustre_diamant.png",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709029170/q9mmo7pxgmnvtzn8rtp1.jpg",
                     Brand = "lustrulux",
                     Type = "Lustres",
                     QuantityInStock = 100
@@ -65,7 +65,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
                     Price = 18000,
-                    PictureUrl = "/images/products/peignoir_peau_ours.png",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709029302/vxkutmckgyykghhx15n1.jpg",
                     Brand = "Louis Vuitton",
                     Type = "Vetement mixte",
                     QuantityInStock = 100
@@ -76,7 +76,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
                     Price = 30000,
-                    PictureUrl = "/images/products/robe_marié_or_diamant.png",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709029752/xmasr1hequk2owyquxzp.jpg",
                     Brand = "MariLux",
                     Type = "Vetement femme",
                     QuantityInStock = 100
@@ -87,7 +87,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 25000,
-                    PictureUrl = "/images/products/pendule_en_or.png",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709029430/a3wad0sobrhkivs3ubd1.jpg",
                     Brand = "Tissot",
                     Type = "Horloge",
                     QuantityInStock = 100
@@ -98,7 +98,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 12000,
-                    PictureUrl = "/images/products/chaussure_peau_crocodile.png",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709029000/acuikplbbvoopowaks1b.jpg",
                     Brand = "Lacoste",
                     Type = "Chaussure homme",
                     QuantityInStock = 100
@@ -109,7 +109,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1000,
-                    PictureUrl = "/images/products/sac_peau_gazelle",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709029988/w7lpsyni26qjyxnt5oww.jpg",
                     Brand = "Louis Vuitton",
                     Type = "Maroquinerie mixte",
                     QuantityInStock = 100
@@ -120,7 +120,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 8000,
-                    PictureUrl = "/images/products/armoire_noble.png",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709028271/glhqhxxuyo0l9mu1xz7s.jpg",
                     Brand = "Noblerama",
                     Type = "Mobilier chambre à coucher",
                     QuantityInStock = 100
@@ -131,7 +131,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1500,
-                    PictureUrl = "/images/products/cendrier en or.png",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709028876/gaxppoieojogyqmwecoy.jpg",
                     Brand = "Cendrilux",
                     Type = "Divers",
                     QuantityInStock = 100
@@ -142,7 +142,7 @@ namespace api.Karim_eshop.Common
                     Description =
                         "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
                     Price = 1800,
-                    PictureUrl = "/images/products/pipe_en_bois_noble",
+                    PictureUrl = "https://res.cloudinary.com/duwjoidpb/image/upload/v1709029608/e4rusjnj2dq3upxznqgt.jpg",
                     Brand = "Stanwell",
                     Type = "Divers",
                     QuantityInStock = 100

@@ -10,12 +10,30 @@ namespace api.Karim_eshop.Business.DTOs
 {
     public class CreateProductDto
     {
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Description { get; set; }
+
+        [Required]
+        [Range(50, Double.PositiveInfinity)]
         public long Price { get; set; }
-        public string PictureUrl { get; set; }
+
+        //[Required]
+        //public string pictureUrl { get; set; }
+
+        [Required]
+        public IFormFile File { get; set; }
+
+        [Required]
         public string Type { get; set; }
+
+        [Required]
         public string Brand { get; set; }
+
+        [Required]
+        [Range(50, 200)]
         public int QuantityInStock { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Karim_eshop.Data.Entity;
 
@@ -10,9 +11,10 @@ using api.Karim_eshop.Data.Entity;
 namespace api.Karim_eshop.Data.Context.Migrations
 {
     [DbContext(typeof(KarimeshopDbContext))]
-    partial class KarimeshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240227063950_PublicId_Added_into_product_table")]
+    partial class PublicId_Added_into_product_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
