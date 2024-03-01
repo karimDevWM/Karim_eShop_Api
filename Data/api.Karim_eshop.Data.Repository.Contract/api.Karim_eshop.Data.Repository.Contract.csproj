@@ -13,9 +13,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Seq.Extensions.Logging" Version="6.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\api.Karim_eshop.Common\api.Karim_eshop.Common.csproj" />
     <ProjectReference Include="..\api.Karim_eshop.Data.Entity\api.Karim_eshop.Data.Entity.csproj" />
   </ItemGroup>
 

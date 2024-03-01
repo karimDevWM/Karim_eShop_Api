@@ -21,8 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{D3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.Karim_eshop.Business.DTOs", "Business\api.Karim_eshop.Business.DTOs\api.Karim_eshop.Business.DTOs.csproj", "{EB9E61A5-B872-480B-8F85-B634723ECDC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.Karim_eshop.Business.Mapper", "Business\api.Karim_eshop.Business.Mapper\api.Karim_eshop.Business.Mapper.csproj", "{235BF1E0-8CE1-4D85-96A5-D50CA449FAC4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.Karim_eshop.Business.Service", "Business\api.Karim_eshop.Business.Service\api.Karim_eshop.Business.Service.csproj", "{CAA825AB-BC52-41B2-BFFC-5269FD4CC088}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.Karim_eshop.Business.Service.Contract", "Business\api.Karim_eshop.Business.Service.Contract\api.Karim_eshop.Business.Service.Contract.csproj", "{6C081455-446D-4ABE-A398-FDF0B4D040B6}"
@@ -71,10 +69,6 @@ Global
 		{EB9E61A5-B872-480B-8F85-B634723ECDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB9E61A5-B872-480B-8F85-B634723ECDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB9E61A5-B872-480B-8F85-B634723ECDC0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{235BF1E0-8CE1-4D85-96A5-D50CA449FAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{235BF1E0-8CE1-4D85-96A5-D50CA449FAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{235BF1E0-8CE1-4D85-96A5-D50CA449FAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{235BF1E0-8CE1-4D85-96A5-D50CA449FAC4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CAA825AB-BC52-41B2-BFFC-5269FD4CC088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CAA825AB-BC52-41B2-BFFC-5269FD4CC088}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAA825AB-BC52-41B2-BFFC-5269FD4CC088}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -142,7 +136,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1287FFCD-0119-4F9F-97DF-F7B0053874A9} = {F983BC0B-506E-4917-B44F-8B07F1283C7D}
 		{EB9E61A5-B872-480B-8F85-B634723ECDC0} = {D3D56C70-5A38-430E-ABD6-A98D032B6265}
-		{235BF1E0-8CE1-4D85-96A5-D50CA449FAC4} = {D3D56C70-5A38-430E-ABD6-A98D032B6265}
 		{CAA825AB-BC52-41B2-BFFC-5269FD4CC088} = {D3D56C70-5A38-430E-ABD6-A98D032B6265}
 		{6C081455-446D-4ABE-A398-FDF0B4D040B6} = {D3D56C70-5A38-430E-ABD6-A98D032B6265}
 		{C2AC69EB-4B65-4DF9-BDB7-36371367B130} = {121C4178-B44F-4A50-9226-2D2E800111B0}

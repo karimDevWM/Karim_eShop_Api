@@ -9,6 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using api.Karim_eshop.Data.Entity;
 using Microsoft.EntityFrameworkCore.Metadata;
+using api.Karim_eshop.Data.Repository.Contract;
+using api.Karim_eshop.Data.Repository;
+using api.Karim_eshop.Business.Service.Contract;
+using api.Karim_eshop.Business.Service;
 //using api.Karim_eshop.Data.Repository.Contract;
 //using api.Karim_eshop.Data.Repository;
 //using api.Karim_eshop.Business.Service.Contract;
@@ -24,7 +28,7 @@ namespace api.Karim_eshop.IoC.Tests
         /// <param name="services"></param>
         public static IServiceCollection ConfigureInjectionDependencyRepositoryTest(this IServiceCollection services)
         {
-            //services.AddScoped<IProduitRepository, ProduitRepository> ();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
 
@@ -37,7 +41,7 @@ namespace api.Karim_eshop.IoC.Tests
         /// <returns></returns>
         public static IServiceCollection ConfigureInjectionDependencyServiceTest(this IServiceCollection services)
         {
-            //services.AddScoped<IProduitService, ProduitService> ();
+            services.AddScoped<IProductService, ProductService>();
 
             return services;
         }

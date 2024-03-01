@@ -1,4 +1,5 @@
 ﻿using api.Karim_eshop.Business.DTOs;
+using api.Karim_eshop.Business.Service.Contract;
 using api.Karim_eshop.Common.Extensions;
 using api.Karim_eshop.Data.Entity;
 using api.Karim_eshop.Data.Entity.Model;
@@ -11,10 +12,12 @@ namespace Karim_eShop.Controllers
     public class BasketController : BaseController
     {
         private readonly KarimeshopDbContext _context;
+        private readonly IBasketService _basketService;
 
-        public BasketController(KarimeshopDbContext context)
+        public BasketController(KarimeshopDbContext context, IBasketService basketService)
         {
             _context = context;
+            _basketService = basketService;
         }
 
         [HttpGet(Name = "GetBasket")]
@@ -77,10 +80,7 @@ namespace Karim_eShop.Controllers
                 return null;
             }
 
-            return await _context.Baskets
-                            .Include(i => i.Items)
-                            .ThenInclude(p => p.Product)
-                            .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
+            return await _basketService.RetrieveBasket(buyerId);
         }
 
         private string GetBuyerId()
@@ -103,6 +103,9 @@ namespace Karim_eShop.Controllers
 
             var basket = new Basket { BuyerId = buyerId };
             _context.Baskets.Add(basket);
+
+            //_basketService.CreateBasket(basket);
+
             return basket;
         }
     }

@@ -21,25 +21,48 @@ var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
 
 // add services to the container
-builder.Services.AddDbContext<KarimeshopDbContext>(opt =>
+//builder.Services.AddDbContext<KarimeshopDbContext>(opt =>
+//{
+//var connectionString = configuration.GetConnectionString("BddConnection");
+//    opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+//                .LogTo(Console.WriteLine, LogLevel.Information)
+//                .EnableSensitiveDataLogging()
+//                .EnableDetailedErrors();
+//});
+
+if (builder.Environment.IsEnvironment("Test"))
 {
-var connectionString = configuration.GetConnectionString("BddConnection");
-    opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-                .LogTo(Console.WriteLine, LogLevel.Information)
-                .EnableSensitiveDataLogging()
-                .EnableDetailedErrors();
-});
+    // Configure Database connexion
+    builder.Services.ConfigureDBContextTest();
+
+    //Dependency Injection
+    builder.Services.ConfigureInjectionDependencyRepositoryTest();
+
+    builder.Services.ConfigureInjectionDependencyServiceTest();
+}
+else
+{
+    // Configure Database connexion
+    builder.Services.ConfigureDBContext(configuration);
+
+    builder.Services.ConfigureIdentity();
+
+    //Dependency Injection
+    builder.Services.ConfigureInjectionDependencyRepository();
+
+    builder.Services.ConfigureInjectionDependencyService();
+}
 
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors();
 // For Identity
-builder.Services.AddIdentityCore<User>(opt =>
-{
-    opt.User.RequireUniqueEmail = true;
-})
-    .AddRoles<Role>()
-    .AddEntityFrameworkStores<KarimeshopDbContext>();
+//builder.Services.AddIdentityCore<User>(opt =>
+//{
+//    opt.User.RequireUniqueEmail = true;
+//})
+//    .AddRoles<Role>()
+//    .AddEntityFrameworkStores<KarimeshopDbContext>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>

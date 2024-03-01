@@ -22,8 +22,7 @@ namespace api.Karim_eshop.Business.DTOs
         [Range(50, Double.PositiveInfinity)]
         public long Price { get; set; }
 
-        //[Required]
-        //public string pictureUrl { get; set; }
+        public string? pictureUrl { get; set; }
 
         public IFormFile File { get; set; }
 

@@ -19,17 +19,6 @@ namespace Karim_eShop.Controllers
             _context = context;
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<List<OrderDto>>> GetOrders()
-        //{
-        //    var orders = await _context.Orders
-        //        .ProjectOrderToOrderDto()
-        //        .Where(x => x.BuyerId == User.Identity.Name)
-        //        .ToListAsync();
-
-        //    return orders;
-        //}
-
         [HttpGet]
         public async Task<ActionResult<List<OrderDto>>> GetOrders()
         {
@@ -37,7 +26,6 @@ namespace Karim_eShop.Controllers
                 .ProjectOrderToOrderDto()
                 .Where(x => x.BuyerId == User.Identity.Name)
                 .ToListAsync();
-
         }
 
         [HttpGet("{id}", Name ="GetOrder")]
@@ -89,7 +77,6 @@ namespace Karim_eShop.Controllers
                 ShippingAddress = orderDto.ShippingAddress,
                 Subtotal = subtotal,
                 DeliveryFee = deliveryFee,
-                //PaymentIntentId = basket.PaymentIntentId
             };
 
             _context.Orders.Add(order);
