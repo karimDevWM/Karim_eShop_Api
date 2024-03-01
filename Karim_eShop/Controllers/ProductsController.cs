@@ -1,9 +1,11 @@
 ﻿using api.Karim_eshop.Business.DTOs;
 using api.Karim_eshop.Business.Service;
+using api.Karim_eshop.Business.Service.Contract;
 using api.Karim_eshop.Common.Extensions;
 using api.Karim_eshop.Common.RequestHelpers;
 using api.Karim_eshop.Data.Entity;
 using api.Karim_eshop.Data.Entity.Model;
+using api.Karim_eshop.Data.Repository.Contract;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,62 +21,37 @@ namespace Karim_eShop.Controllers
     {
         private readonly KarimeshopDbContext _context;
         private readonly IMapper _mapper;
-        private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<ProductsController> _logger;
+        private readonly ImageService _imageService;
+        private readonly IProductService _productService;
+        //private readonly IProductRepository _productRepository;
 
-        public ProductsController(KarimeshopDbContext context, IMapper mapper, SignInManager<User> signInManager,
-            UserManager<User> userManager, ILogger<ProductsController> logger)
+        public ProductsController(KarimeshopDbContext context, IMapper mapper,
+            UserManager<User> userManager, ILogger<ProductsController> logger, ImageService imageService,
+            IProductService productService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _logger = logger ?? throw new ArgumentNullException(nameof(ProductsController));
+            _imageService = imageService;
+            _productService = productService;
         }
 
         [HttpGet]
         public async Task<ActionResult<PagedList<Product>>> GetProducts([FromQuery] ProductParams productParams)
         {
-            var query = _context.Products
-                .Sort(productParams.OrderBy)
-                .Search(productParams.SearchTerm)
-                .Filter(productParams.Brands, productParams.Types)
-                .AsQueryable();
+            //var query = _context.Products
+            //    .Sort(productParams.OrderBy)
+            //    .Search(productParams.SearchTerm)
+            //    .Filter(productParams.Brands, productParams.Types)
+            //    .AsQueryable();
 
-            var products =
-                await PagedList<Product>.ToPagedList(query, productParams.PageNumber, productParams.PageSize);
+            //var products =
+            //    await PagedList<Product>.ToPagedList(query, productParams.PageNumber, productParams.PageSize);
 
-            Response.AddPaginationHeader(products.MetaData);
-
-            return products;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<PagedList<Product>>> GetProductsWithoutFilters([FromQuery]ProductParams productParams)
-        {
-            var query = _context.Products
-                .Sort(productParams.OrderBy)
-                .Search(productParams.SearchTerm)
-                .Filter(productParams.Brands, productParams.Types)
-                .AsQueryable();
-
-            //query = OrderBy switch
-            //{
-            //    "price" => query.OrderBy(p => p.Price),
-            //    "priceDesc" => query.OrderByDescending(p => p.Price),
-            //    _ => query.OrderBy(p => p.Name)
-            //};
-
-            //var products = await _context.Products.ToListAsync();
-
-            //Response.AddPaginationHeader(products.MetaData);
-
-            //return await query.ToListAsync();
-
-            var products = await PagedList<Product>.ToPagedList(query, productParams.PageNumber, productParams.PageSize);
-
-            //Response.Headers.Add("Pagination", JsonSerializer.Serialize(products.MetaData));
+            var products = await _productService.GetProductsAsync(productParams);
 
             Response.AddPaginationHeader(products.MetaData);
 
@@ -84,7 +61,8 @@ namespace Karim_eShop.Controllers
         [HttpGet("{id}", Name = "GetProduct")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _productService.GetProductByIdAsync(id);
+            //var product = await _context.Products.FindAsync(id);
 
             if (product == null) return NotFound();
 
@@ -100,57 +78,66 @@ namespace Karim_eShop.Controllers
             return Ok(new { brands, types });
         }
 
-        [HttpPost]
+
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductDto productDto)
+        [HttpPost]
+        public async Task<ActionResult<CreateProductDto>> CreateProduct([FromForm] CreateProductDto productDto)
         {
 
             var product = _mapper.Map<Product>(productDto);
 
-            _context.Products.Add(product);
+            if(productDto.File != null)
+            {
+                var imageResult = await _imageService.AddImageAsync(productDto.File);
 
-            var result = await _context.SaveChangesAsync() > 0;
+                if(imageResult.Error != null)
+                    return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
 
-            if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
+                product.PictureUrl = imageResult.SecureUri.ToString();
+                product.PublicId = imageResult.PublicId;
+            }
+
+            await _productService.CreateProductDTOAsync(product);
+
+            var isResult = await _productService.CheckProductNameExisteAsync(productDto.Name);
+
+            if (isResult) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
 
             return BadRequest(new ProblemDetails { Title = "Problem creating new product" });
-
-            //if(_signInManager.IsSignedIn(User))
-            //{
-            //    var user = await _userManager.GetUserAsync(User);
-
-            //    var roles = await _userManager.GetRolesAsync(user);
-
-            //    foreach (var role in roles)
-            //    {
-            //        if (role == "Admin")
-            //        {
-
-            //        }
-            //    }
-            //}
-
-            return Unauthorized();
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpPut]
-        //public async Task<ActionResult<Product>> UpdateProduct([FromForm] UpdateProductDto productDto)
-        //{
-        //    var product = await _context.Products.FindAsync(productDto.Id);
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        public async Task<ActionResult<Product>> UpdateProduct([FromForm] UpdateProductDto productDto)
+        {
+            var product = await _productService.GetProductByIdAsync(productDto.Id);
 
-        //    if (product == null) return NotFound();
+            if (product == null) return NotFound();
 
-        //    _mapper.Map(productDto, product);
+            _mapper.Map(productDto, product);
 
-        //    _mapper.Map(productDto, product);
+            if (productDto.File != null)
+            {
+                var imageResult = await _imageService.AddImageAsync(productDto.File);
 
-        //    var result = await _context.SaveChangesAsync() > 0;
+                if(imageResult.Error != null)
+                    return BadRequest(new ProblemDetails { Title= imageResult.Error.Message });
 
-        //    if (result) return Ok(product);
+                if(!string.IsNullOrEmpty(product.PublicId))
+                    await _imageService.DeleteImageAsync(product.PublicId);
 
-        //    return BadRequest(new ProblemDetails { Title = "Problem updating product" });
-        //}
+                product.PictureUrl = imageResult.SecureUri.ToString();
+                product.PublicId = imageResult.PublicId;
+            }
+
+            await _productService.UpdateProductAsync(product);
+
+            var isResult = await _productService.CheckProductNameExisteAsync(productDto.Name);
+
+            if (isResult) return Ok(product);
+
+            return BadRequest(new ProblemDetails { Title = "Problem updating product" });
+        }
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
@@ -159,6 +146,9 @@ namespace Karim_eShop.Controllers
             var product = await _context.Products.FindAsync(id);
 
             if (product == null) return NotFound();
+
+            if (!string.IsNullOrEmpty(product.PublicId))
+                await _imageService.DeleteImageAsync(product.PublicId);
 
             _context.Products.Remove(product);
 
