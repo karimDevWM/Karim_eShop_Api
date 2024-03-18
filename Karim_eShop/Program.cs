@@ -1,12 +1,17 @@
+using api.Karim_eshop.Business.Service;
 using api.Karim_eshop.Business.Service.Email.Models;
 using api.Karim_eshop.Business.Service.Email.Services;
+using api.Karim_eshop.Common;
 using api.Karim_eshop.Common.Middleware;
 using api.Karim_eshop.Data.Entity;
 using api.Karim_eshop.Data.Entity.Model;
 using api.Karim_eshop.IoC.Application;
 using api.Karim_eshop.IoC.Tests;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -15,9 +20,19 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
 
-if(builder.Environment.IsEnvironment("Test"))
+// add services to the container
+//builder.Services.AddDbContext<KarimeshopDbContext>(opt =>
+//{
+//var connectionString = configuration.GetConnectionString("BddConnection");
+//    opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+//                .LogTo(Console.WriteLine, LogLevel.Information)
+//                .EnableSensitiveDataLogging()
+//                .EnableDetailedErrors();
+//});
+
+if (builder.Environment.IsEnvironment("Test"))
 {
-    // Configure Database connection
+    // Configure Database connexion
     builder.Services.ConfigureDBContextTest();
 
     //Dependency Injection
@@ -30,130 +45,77 @@ else
     // Configure Database connexion
     builder.Services.ConfigureDBContext(configuration);
 
+    builder.Services.ConfigureIdentity();
+
     //Dependency Injection
     builder.Services.ConfigureInjectionDependencyRepository();
 
     builder.Services.ConfigureInjectionDependencyService();
 }
 
-
-
-//// configure Authentication
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//        {
-//            options.Audience = "karim_eshop-api";
-//            options.Authority = "http://localhost:8010/";
-//        }
-//    );
-
-// For Identity
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<KarimeshopDbContext>()
-    .AddDefaultTokenProviders();
-
-// Add AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 
-// Add services to the container.
+builder.Services.AddCors();
+// For Identity
+//builder.Services.AddIdentityCore<User>(opt =>
+//{
+//    opt.User.RequireUniqueEmail = true;
+//})
+//    .AddRoles<Role>()
+//    .AddEntityFrameworkStores<KarimeshopDbContext>();
 
-builder.Services.Configure<IdentityOptions>(
-    options => options.SignIn.RequireConfirmedEmail = true
-);
-
-// for forgot password
-builder.Services.Configure<DataProtectionTokenProviderOptions>(
-    opts => opts.TokenLifespan = TimeSpan.FromHours(10)
-);
-
-// Adding Authentication
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.SaveToken = true;
-    options.RequireHttpsMetadata = false;
-    options.TokenValidationParameters = new TokenValidationParameters()
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opt =>
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidAudience = configuration["JWT:ValidAudience"],
-        ValidIssuer = configuration["JWT:ValidIssuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
-    };
-}
-);
+        opt.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false,
+            ValidateIssuer = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.
+                GetBytes(builder.Configuration["JWTSettings:TokenKey"]))
+        };
+    });
+builder.Services.AddAuthorization();
+builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<ImageService>();
 
-// Add Email Configs
-var emailConfig = configuration
-    .GetSection("EmailConfiguration")
-    .Get<EmailConfiguration>();
-builder.Services.AddSingleton(emailConfig);
-
-builder.Services.AddScoped<IEmailService, EmailService>();
-
-
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen
-(
-    option =>
+builder.Services.AddSwaggerGen(c =>
+{
+    var jwtSecurityScheme = new OpenApiSecurityScheme
     {
-        option.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
-        option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        BearerFormat = "JWT",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+        Description = "Put Bearer + your token in the box",
+        Reference = new OpenApiReference
         {
-            In = ParameterLocation.Header,
-            Description = "Please enter a valid token",
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            BearerFormat = "JWT",
-            Scheme = "Bearer"
-        });
-        option.AddSecurityRequirement(new OpenApiSecurityRequirement
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+    c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type=ReferenceType.SecurityScheme,
-                        Id="Bearer"
-                    }
-                },
-                new string[] {}
-            }
-        });
-    }
-);
-// Configure HTTPS redirection with the HTTPS port
-//builder.Services.AddHttpsRedirection(options =>
-//{
-//    options.HttpsPort = 443; // Specify your HTTPS port here
-//});
+            jwtSecurityScheme, Array.Empty<string>()
+        }
+    });
+});
 
-//add cors
-//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: MyAllowSpecificOrigins,
-//                      policy =>
-//                      {
-//                          policy.AllowAnyOrigin()
-//                          .AllowAnyHeader()
-//                          .AllowAnyMethod();
-//                      });
-//});
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionMiddleware>();
-
+// co,figure the HTTP request piepile
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -168,21 +130,25 @@ app.UseCors(opt =>
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
 });
 
-//app.UseCors(builder => builder
-//    .SetPreflightMaxAge(TimeSpan.FromMinutes(10))
-//    .AllowAnyOrigin()
-//    .AllowAnyMethod()
-//    .AllowAnyHeader()
-//);
-
-//app.UseHttpsRedirection();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();
 
+var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<KarimeshopDbContext>();
+var userManager = scope.ServiceProvider.GetRequiredService<Microsoft.AspNetCore.Identity.UserManager<User>>();
+var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+try
+{
+    await context.Database.MigrateAsync();
+    await DbInitializer.Initialize(context, userManager);
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "A problem occurred during migration");
+}
+
 app.Run();
 
-public partial class Program { }
+//public partial class Program { }

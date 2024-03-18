@@ -1,7 +1,13 @@
 ﻿//using api.Karim_eshop.Business.Service;
 //using api.Karim_eshop.Business.Service.Contract;
+using api.Karim_eshop.Business.Service;
+using api.Karim_eshop.Business.Service.Contract;
 using api.Karim_eshop.Data.Context.Contract;
 using api.Karim_eshop.Data.Entity;
+using api.Karim_eshop.Data.Entity.Model;
+using api.Karim_eshop.Data.Repository;
+using api.Karim_eshop.Data.Repository.Contract;
+
 //using api.Karim_eshop.Data.Repository;
 //using api.Karim_eshop.Data.Repository.Contract;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +29,8 @@ namespace api.Karim_eshop.IoC.Application
             // Injections des Dépendances
             // - Repositories
 
-            //services.AddScoped<IProduitRepository, ProduitRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
 
             return services;
         }
@@ -33,7 +40,8 @@ namespace api.Karim_eshop.IoC.Application
             // Injections des Dépendances
             // - Services
 
-            //services.AddScoped<IProduitService, ProduitService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IBasketService, BasketService>();
 
             return services;
         }
@@ -50,5 +58,16 @@ namespace api.Karim_eshop.IoC.Application
 
             return services;
         }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            services.AddIdentityCore<User>(opt =>
+            {
+                opt.User.RequireUniqueEmail = true;
+            })
+            .AddRoles<Role>()
+            .AddEntityFrameworkStores<KarimeshopDbContext>();
+        }
+
     }
 }

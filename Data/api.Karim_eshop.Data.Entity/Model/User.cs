@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace api.Karim_eshop.Data.Entity.Model
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<int>
     {
-        public string Photo {  get; set; }
+        public string? Photo { get; set; }
         public UserAddress Address { get; set; }
     }
 }

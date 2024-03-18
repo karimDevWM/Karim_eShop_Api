@@ -8,7 +8,7 @@
 
         public long Price { get; set; }
 
-        public string Photo { get; set; }
+        public string PictureUrl { get; set; }
 
         public string Brand { get; set; }
 
