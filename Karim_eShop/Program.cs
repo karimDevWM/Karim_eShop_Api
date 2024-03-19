@@ -1,6 +1,4 @@
 using api.Karim_eshop.Business.Service;
-using api.Karim_eshop.Business.Service.Email.Models;
-using api.Karim_eshop.Business.Service.Email.Services;
 using api.Karim_eshop.Common;
 using api.Karim_eshop.Common.Middleware;
 using api.Karim_eshop.Data.Entity;

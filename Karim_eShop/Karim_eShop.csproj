@@ -30,7 +30,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Business\api.Karim_eshop.Business.DTOs\api.Karim_eshop.Business.DTOs.csproj" />
     <ProjectReference Include="..\Business\api.Karim_eshop.Business.Service.Contract\api.Karim_eshop.Business.Service.Contract.csproj" />
-    <ProjectReference Include="..\Business\api.Karim_eshop.Business.Service.Email\api.Karim_eshop.Business.Service.Email.csproj" />
     <ProjectReference Include="..\Business\api.Karim_eshop.Business.Service\api.Karim_eshop.Business.Service.csproj" />
     <ProjectReference Include="..\Common\api.Karim_eshop.Common\api.Karim_eshop.Common.csproj" />
     <ProjectReference Include="..\Data\api.Karim_eshop.Data.Context.Contract\api.Karim_eshop.Data.Context.Contract.csproj" />
