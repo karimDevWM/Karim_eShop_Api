@@ -60,7 +60,6 @@ namespace Karim_eShop.Controllers
             {
                 UserName = registerModel.Username,
                 Email = registerModel.Email,
-                Photo = registerModel.Photo
             };
 
             var result = await _userManager.CreateAsync(user, registerModel.Password);
