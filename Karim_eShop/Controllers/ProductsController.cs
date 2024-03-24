@@ -25,7 +25,6 @@ namespace Karim_eShop.Controllers
         private readonly ILogger<ProductsController> _logger;
         private readonly ImageService _imageService;
         private readonly IProductService _productService;
-        //private readonly IProductRepository _productRepository;
 
         public ProductsController(KarimeshopDbContext context, IMapper mapper,
             UserManager<User> userManager, ILogger<ProductsController> logger, ImageService imageService,
@@ -83,6 +82,10 @@ namespace Karim_eShop.Controllers
         [HttpPost]
         public async Task<ActionResult<CreateProductDto>> CreateProduct([FromForm] CreateProductDto productDto)
         {
+            if(productDto is null)
+            {
+                _logger.LogError("Creating Product failed", productDto);
+            }
 
             var product = _mapper.Map<Product>(productDto);
 

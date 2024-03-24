@@ -49,11 +49,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.Karim_eshop.Tests.Unita
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.Karim_eshop.Business.Service.Email", "Business\api.Karim_eshop.Business.Service.Email\api.Karim_eshop.Business.Service.Email.csproj", "{F408B331-CE90-4C82-868E-F540C1183739}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6AA479C7-588D-45E3-83AE-81936A220A3C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.Karim_eshop.Common", "Common\api.Karim_eshop.Common\api.Karim_eshop.Common.csproj", "{3B3EE6C2-0EAE-4942-9C7E-DCD2BEBD4775}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,14 +121,14 @@ Global
 		{F408B331-CE90-4C82-868E-F540C1183739}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F408B331-CE90-4C82-868E-F540C1183739}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F408B331-CE90-4C82-868E-F540C1183739}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B3EE6C2-0EAE-4942-9C7E-DCD2BEBD4775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B3EE6C2-0EAE-4942-9C7E-DCD2BEBD4775}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B3EE6C2-0EAE-4942-9C7E-DCD2BEBD4775}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B3EE6C2-0EAE-4942-9C7E-DCD2BEBD4775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1534BD-B0F1-47D4-BA4B-2D4356891ADC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

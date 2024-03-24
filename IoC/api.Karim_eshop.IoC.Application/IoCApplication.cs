@@ -1,21 +1,17 @@
-﻿//using api.Karim_eshop.Business.Service;
-//using api.Karim_eshop.Business.Service.Contract;
-using api.Karim_eshop.Business.Service;
+﻿using api.Karim_eshop.Business.Service;
 using api.Karim_eshop.Business.Service.Contract;
 using api.Karim_eshop.Data.Context.Contract;
 using api.Karim_eshop.Data.Entity;
 using api.Karim_eshop.Data.Entity.Model;
 using api.Karim_eshop.Data.Repository;
 using api.Karim_eshop.Data.Repository.Contract;
-
-//using api.Karim_eshop.Data.Repository;
-//using api.Karim_eshop.Data.Repository.Contract;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
