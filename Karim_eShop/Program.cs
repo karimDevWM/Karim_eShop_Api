@@ -7,16 +7,22 @@ using api.Karim_eshop.IoC.Application;
 using api.Karim_eshop.IoC.Tests;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Exceptions;
+using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
+
+
 
 // add services to the container
 //builder.Services.AddDbContext<KarimeshopDbContext>(opt =>
@@ -111,7 +117,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
+//configureLogging();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
@@ -151,36 +158,4 @@ catch (Exception ex)
 
 app.Run();
 
-//void configureLogging()
-//{
-//    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-//    var configuration = new ConfigurationBuilder()
-//        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-//        .AddJsonFile(
-//            $"appsettings.{environment}.json", optional: true
-//        ).Build();
-
-//    Log.Logger = new LoggerConfiguration()
-//        .Enrich.FromLogContext()
-//        .Enrich.WithExceptionDetails()
-//        .WriteTo.Debug()
-//        .WriteTo.Console()
-//        .WriteTo.Elasticsearch(ConfigureElasticSink(configuration, environment))
-//        .Enrich.WithProperty("Environment", environment)
-//        .ReadFrom.Configuration(configuration)
-//        .CreateLogger();
-//}
-
-//ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot configuration, string environment)
-//{
-//    return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
-//    {
-//        AutoRegisterTemplate = true,
-//        IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{environment.ToLower()}-{DateTime.UtcNow:yyyy-MM}",
-//        NumberOfReplicas = 1,
-//        NumberOfShards = 2,
-//    };
-//}
-
-public partial class Program { }
+//public partial class Program { }

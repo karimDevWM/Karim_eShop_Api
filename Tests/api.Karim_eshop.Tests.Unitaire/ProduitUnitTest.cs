@@ -35,29 +35,31 @@ namespace api.Karim_eshop.Tests.Unitaire
             CleanTest();
         }
 
-        //[Test]
-        //public async Task CreateProduit()
-        //{
-        //    // Arrange
-        //    var produit = new Produit()
-        //    {
-        //        ProduitId = 2,
-        //        ProduitLibelle = "Mixeur",
-        //        ProduitDescription = "Mixeur pour bébé",
-        //        ProduitPrix = (decimal?)49.99,
-        //        ProduitImage = "mixeur.jpeg"
-        //    };
+        [Test]
+        public async Task CreateProduit()
+        {
+            // Arrange
+            var produit = new Product()
+            {
+                Id = 2,
+                Name = "Mixeur",
+                Description = "Mixeur pour bébé",
+                Price = 49,
+                PictureUrl = "mixeur.jpeg",
+                Brand = "electrolux",
+                Type = "mixeur",
+            };
 
-        //    // Act
-        //    var productToAdd = await _productRepository.CreateProductAsync(produit).ConfigureAwait(false);
+            // Act
+            var productToAdd = await _productRepository.CreateProductAsync(produit).ConfigureAwait(false);
 
-        //    // Assert
-        //    Assert.Multiple(() =>
-        //    {
-        //        Assert.That(productToAdd, Is.Not.Null);
-        //        Assert.That(produit.ProduitLibelle, Is.EqualTo(productToAdd.ProduitLibelle));
-        //    });
-        //}
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(productToAdd, Is.Not.Null);
+                Assert.That(produit.Name, Is.EqualTo(productToAdd.Name));
+            });
+        }
 
         //[Test]
         //public async Task GetProducts(ProductParams productParams)
@@ -67,13 +69,13 @@ namespace api.Karim_eshop.Tests.Unitaire
         //    Assert.That(produits, Is.Not.Null);
         //}
 
-        //[Test]
-        //public async Task GetProductById()
-        //{
-        //    int id = 1;
-        //    var produit = await _productRepository.GetProductByIdAsync(id).ConfigureAwait(false);
+        [Test]
+        public async Task GetProductById()
+        {
+            int id = 1;
+            var produit = await _productRepository.GetProductByIdAsync(id).ConfigureAwait(false);
 
-        //    Assert.That(id, Is.EqualTo(produit.ProduitId));
-        //}
+            Assert.That(id, Is.EqualTo(produit.Id));
+        }
     }
 }

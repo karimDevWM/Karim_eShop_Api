@@ -18,7 +18,5 @@ namespace api.Karim_eshop.Business.DTOs.Authentication.Signup
 
         [Required(ErrorMessage = "Password is required")]
         public string? Password { get; set; }
-
-        public string? Photo { get; set; }
     }
 }

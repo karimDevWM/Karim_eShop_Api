@@ -6,6 +6,7 @@ using api.Karim_eshop.Data.Entity.Model;
 using api.Karim_eshop.Data.Repository.Contract;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +19,22 @@ namespace api.Karim_eshop.Business.Service
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<ProductService> _logger;
 
-        public ProductService(IProductRepository productRepository, IMapper mapper)
+        public ProductService(IProductRepository productRepository, IMapper mapper, ILogger<ProductService> logger)
         {
-            _productRepository = productRepository;
-            _mapper = mapper;
+            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<CreateProductDto> CreateProductDTOAsync(Product product)
         {
+            _logger.LogInformation("Creating Product : {@Product}", product);
+
             var productAdded = await _productRepository.CreateProductAsync(product).ConfigureAwait(false);
+
+            _logger.LogInformation("Creating Product Successfull : {@ProductAdded}", productAdded);
 
             return _mapper.Map<CreateProductDto>(productAdded);
         }

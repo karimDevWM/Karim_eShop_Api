@@ -30,6 +30,7 @@ namespace api.Karim_eshop.IoC.Tests
         public static IServiceCollection ConfigureInjectionDependencyRepositoryTest(this IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
 
             return services;
 
@@ -43,6 +44,7 @@ namespace api.Karim_eshop.IoC.Tests
         public static IServiceCollection ConfigureInjectionDependencyServiceTest(this IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IBasketService, BasketService>();
 
             return services;
         }

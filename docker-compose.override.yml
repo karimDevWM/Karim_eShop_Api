@@ -7,11 +7,9 @@ services:
       - "ConnectionStrings:BddConnection=Server=karim_eshop_db;User=root;Password=example;Database=karim_eshop;port=3306"
       - ASPNETCORE_URLS=http://+:80
     ports:
-      - "80"
-      # - "443"
+      - "8000:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      # - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   karim_eshop_db:
     environment:

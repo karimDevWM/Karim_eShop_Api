@@ -14,7 +14,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MimeKit" Version="4.3.0" />
-    <PackageReference Include="Seq.Extensions.Logging" Version="6.1.0" />
     <PackageReference Include="Stripe.net" Version="43.14.0" />
   </ItemGroup>
 
