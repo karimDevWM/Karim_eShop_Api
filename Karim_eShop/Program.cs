@@ -7,16 +7,22 @@ using api.Karim_eshop.IoC.Application;
 using api.Karim_eshop.IoC.Tests;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Exceptions;
+using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
+
+
 
 // add services to the container
 //builder.Services.AddDbContext<KarimeshopDbContext>(opt =>
@@ -37,6 +43,8 @@ if (builder.Environment.IsEnvironment("Test"))
     builder.Services.ConfigureInjectionDependencyRepositoryTest();
 
     builder.Services.ConfigureInjectionDependencyServiceTest();
+
+    builder.Services.ConfigureIdentityTest();
 }
 else
 {
@@ -109,7 +117,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
+//configureLogging();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

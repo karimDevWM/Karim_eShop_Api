@@ -14,7 +14,6 @@
     </PackageReference>
     <PackageReference Include="MimeKit" Version="4.3.0" />
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
-    <PackageReference Include="Seq.Extensions.Logging" Version="6.1.0" />
   </ItemGroup>
 
 </Project>
