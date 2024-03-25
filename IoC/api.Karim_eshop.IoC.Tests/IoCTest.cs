@@ -13,6 +13,7 @@ using api.Karim_eshop.Data.Repository.Contract;
 using api.Karim_eshop.Data.Repository;
 using api.Karim_eshop.Business.Service.Contract;
 using api.Karim_eshop.Business.Service;
+using api.Karim_eshop.Data.Entity.Model;
 //using api.Karim_eshop.Data.Repository.Contract;
 //using api.Karim_eshop.Data.Repository;
 //using api.Karim_eshop.Business.Service.Contract;
@@ -53,6 +54,16 @@ namespace api.Karim_eshop.IoC.Tests
             );
 
             return services;
+        }
+
+        public static void ConfigureIdentityTest(this IServiceCollection services)
+        {
+            services.AddIdentityCore<User>(opt =>
+            {
+                opt.User.RequireUniqueEmail = true;
+            })
+            .AddRoles<Role>()
+            .AddEntityFrameworkStores<KarimeshopDbContext>();
         }
     }
 }

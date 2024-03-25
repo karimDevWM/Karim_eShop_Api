@@ -37,6 +37,8 @@ if (builder.Environment.IsEnvironment("Test"))
     builder.Services.ConfigureInjectionDependencyRepositoryTest();
 
     builder.Services.ConfigureInjectionDependencyServiceTest();
+
+    builder.Services.ConfigureIdentityTest();
 }
 else
 {
@@ -149,4 +151,36 @@ catch (Exception ex)
 
 app.Run();
 
-//public partial class Program { }
+//void configureLogging()
+//{
+//    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+//    var configuration = new ConfigurationBuilder()
+//        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+//        .AddJsonFile(
+//            $"appsettings.{environment}.json", optional: true
+//        ).Build();
+
+//    Log.Logger = new LoggerConfiguration()
+//        .Enrich.FromLogContext()
+//        .Enrich.WithExceptionDetails()
+//        .WriteTo.Debug()
+//        .WriteTo.Console()
+//        .WriteTo.Elasticsearch(ConfigureElasticSink(configuration, environment))
+//        .Enrich.WithProperty("Environment", environment)
+//        .ReadFrom.Configuration(configuration)
+//        .CreateLogger();
+//}
+
+//ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot configuration, string environment)
+//{
+//    return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
+//    {
+//        AutoRegisterTemplate = true,
+//        IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(".", "-")}-{environment.ToLower()}-{DateTime.UtcNow:yyyy-MM}",
+//        NumberOfReplicas = 1,
+//        NumberOfShards = 2,
+//    };
+//}
+
+public partial class Program { }
