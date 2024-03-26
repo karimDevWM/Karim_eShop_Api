@@ -103,7 +103,7 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-// co,figure the HTTP request piepile
+// configure the HTTP request piepile
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
