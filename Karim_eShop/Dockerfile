@@ -15,7 +15,6 @@ COPY ["Business/api.Karim_eshop.Business.Service.Contract/api.Karim_eshop.Busine
 COPY ["Common/api.Karim_eshop.Common/api.Karim_eshop.Common.csproj", "Common/api.Karim_eshop.Common/"]
 COPY ["Data/api.Karim_eshop.Data.Context/api.Karim_eshop.Data.Context.csproj", "Data/api.Karim_eshop.Data.Context/"]
 COPY ["Data/api.Karim_eshop.Data.Context.Contract/api.Karim_eshop.Data.Context.Contract.csproj", "Data/api.Karim_eshop.Data.Context.Contract/"]
-COPY ["Business/api.Karim_eshop.Business.Service.Email/api.Karim_eshop.Business.Service.Email.csproj", "Business/api.Karim_eshop.Business.Service.Email/"]
 COPY ["Business/api.Karim_eshop.Business.Service/api.Karim_eshop.Business.Service.csproj", "Business/api.Karim_eshop.Business.Service/"]
 COPY ["Data/api.Karim_eshop.Data.Repository.Contract/api.Karim_eshop.Data.Repository.Contract.csproj", "Data/api.Karim_eshop.Data.Repository.Contract/"]
 COPY ["Data/api.Karim_eshop.Data.Repository/api.Karim_eshop.Data.Repository.csproj", "Data/api.Karim_eshop.Data.Repository/"]
