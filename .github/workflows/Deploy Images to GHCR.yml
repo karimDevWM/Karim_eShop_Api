@@ -27,5 +27,5 @@ jobs:
 
           - name: 'Build Inventory Image'
             run: |
-              docker build . --tag ghcr.io/karimdevwm/product_microservice:latest
-              docker push ghcr.io/karimdevwm/product_microservice:latest
+              docker build . --tag ghcr.io/karimdevwm/Karim_eShop_Api:latest
+              docker push ghcr.io/karimdevwm/Karim_eShop_Api:latest
