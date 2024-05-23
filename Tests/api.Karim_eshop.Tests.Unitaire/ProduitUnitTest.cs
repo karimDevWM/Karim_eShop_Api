@@ -61,14 +61,6 @@ namespace api.Karim_eshop.Tests.Unitaire
             });
         }
 
-        //[Test]
-        //public async Task GetProducts(ProductParams productParams)
-        //{
-        //    var produits = await _productRepository.GetAllProductsAsync(productParams).ConfigureAwait(false);
-
-        //    Assert.That(produits, Is.Not.Null);
-        //}
-
         [Test]
         public async Task GetProductById()
         {
