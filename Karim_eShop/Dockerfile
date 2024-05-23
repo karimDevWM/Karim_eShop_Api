@@ -20,8 +20,8 @@ COPY ["Data/api.Karim_eshop.Data.Repository.Contract/api.Karim_eshop.Data.Reposi
 COPY ["Data/api.Karim_eshop.Data.Repository/api.Karim_eshop.Data.Repository.csproj", "Data/api.Karim_eshop.Data.Repository/"]
 COPY ["IoC/api.Karim_eshop.IoC.Application/api.Karim_eshop.IoC.Application.csproj", "IoC/api.Karim_eshop.IoC.Application/"]
 COPY ["IoC/api.Karim_eshop.IoC.Tests/api.Karim_eshop.IoC.Tests.csproj", "IoC/api.Karim_eshop.IoC.Tests/"]
-COPY ["Tests/api.Karim_eshop.Tests.Common/api.Karim_eshop.Tests.Common.csproj", "Tests/api.Karim_eshop.Tests.Common/"]
-COPY ["Tests/api.Karim_eshop.Tests.integra/api.Karim_eshop.Tests.integra.csproj", "Tests/api.Karim_eshop.Tests.integra/"]
+#COPY ["Tests/api.Karim_eshop.Tests.Common/api.Karim_eshop.Tests.Common.csproj", "Tests/api.Karim_eshop.Tests.Common/"]
+#COPY ["Tests/api.Karim_eshop.Tests.integra/api.Karim_eshop.Tests.integra.csproj", "Tests/api.Karim_eshop.Tests.integra/"]
 #COPY ["Tests/api.Karim_eshop.Tests.Unitaire/api.Karim_eshop.Tests.Unitaire.csproj", "Tests/api.Karim_eshop.Tests.Unitaire/"]
 RUN dotnet restore "./Karim_eShop/./Karim_eShop.csproj"
 COPY . .
