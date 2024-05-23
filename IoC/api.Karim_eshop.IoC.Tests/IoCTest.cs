@@ -1,7 +1,6 @@
 ﻿using api.Karim_eshop.Data.Context.Contract;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-//using api.Karim_eshop.IoC.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +13,6 @@ using api.Karim_eshop.Data.Repository;
 using api.Karim_eshop.Business.Service.Contract;
 using api.Karim_eshop.Business.Service;
 using api.Karim_eshop.Data.Entity.Model;
-//using api.Karim_eshop.Data.Repository.Contract;
-//using api.Karim_eshop.Data.Repository;
-//using api.Karim_eshop.Business.Service.Contract;
-//using api.Karim_eshop.Business.Service;
 
 namespace api.Karim_eshop.IoC.Tests
 {
