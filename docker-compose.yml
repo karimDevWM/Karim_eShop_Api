@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}karimeshop
     build:
       context: .
-      dockerfile: Karim_eShop/Dockerfile
+      dockerfile: Dockerfile
 
   karim_eshop_db:
     image: mysql

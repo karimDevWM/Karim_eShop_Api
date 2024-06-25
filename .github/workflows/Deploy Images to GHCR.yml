@@ -6,7 +6,7 @@ env:
 on:
   pull_request:
     branches:
-      - develop
+      - Develop
 
 jobs:
       push-store-image:
@@ -27,5 +27,5 @@ jobs:
 
           - name: 'Build Inventory Image'
             run: |
-              docker build . --tag ghcr.io/karimdevwm/product_microservice:latest
-              docker push ghcr.io/karimdevwm/product_microservice:latest
+              docker build . --tag ghcr.io/karimdevwm/karim_eshop_api:latest
+              docker push ghcr.io/karimdevwm/karim_eshop_api:latest
