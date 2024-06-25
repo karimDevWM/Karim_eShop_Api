@@ -426,5 +426,5 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,visualstudiocode,visualstudio
 
-password users for user management api.txt
-usersCredentials.txt
+./password users for user management api.txt
+./usersCredentials.txt
