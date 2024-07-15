@@ -36,4 +36,4 @@ RUN dotnet publish "./Karim_eShop.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["/usr/bin/dotnet", "Karim_eShop.dll"]
+ENTRYPOINT ["dotnet", "Karim_eShop.dll"]
