@@ -6,7 +6,7 @@ env:
 on:
   pull_request:
     branches:
-      - Develop
+      - main
 
 jobs:
       push-store-image:
@@ -26,6 +26,14 @@ jobs:
               password: ${{secrets.GITHUB_TOKEN}}
 
           - name: 'Build Inventory Image'
+            env:
+              CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+              CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+              CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
             run: |
-              docker build . --tag ghcr.io/karimdevwm/karim_eshop_api:latest
+              docker build . \
+                --build-arg CLOUDINARY_CLOUD_NAME=$CLOUDINARY_CLOUD_NAME \
+                --build-arg CLOUDINARY_API_KEY=$CLOUDINARY_API_KEY \
+                --build-arg CLOUDINARY_API_SECRET=$CLOUDINARY_API_SECRET \
+                --tag ghcr.io/karimdevwm/karim_eshop_api:latest
               docker push ghcr.io/karimdevwm/karim_eshop_api:latest
