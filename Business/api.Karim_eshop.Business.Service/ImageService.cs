@@ -17,14 +17,17 @@ namespace api.Karim_eshop.Business.Service
 
         public ImageService(IConfiguration config)
         {
-            var acc = new Account
-            (
-                config["Cloudinary:CloudName"],
-                config["Cloudinary:ApiKey"],
-                config["Cloudinary:ApiSecret"]
-            );
+            var cloudName = Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME");
+            var apiKey = Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY");
+            var apiSecret = Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET");
 
-            _cloudinary = new Cloudinary(acc);
+            if (string.IsNullOrEmpty(cloudName) || string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
+            {
+                throw new ArgumentException("Cloudinary account details are missing.");
+            }
+
+            var account = new Account(cloudName, apiKey, apiSecret);
+            _cloudinary = new Cloudinary(account);
         }
 
         public async Task<ImageUploadResult> AddImageAsync(IFormFile file)
