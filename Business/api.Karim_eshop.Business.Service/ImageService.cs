@@ -17,16 +17,19 @@ namespace api.Karim_eshop.Business.Service
 
         public ImageService(IConfiguration config)
         {
-            var cloudName = Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME");
-            var apiKey = Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY");
-            var apiSecret = Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET");
+            var cloudinaryConfig = new CloudinaryConfig();
+            config.GetSection("Cloudinary").Bind(cloudinaryConfig);
 
-            if (string.IsNullOrEmpty(cloudName) || string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
+            //var cloudName = Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME");
+            //var apiKey = Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY");
+            //var apiSecret = Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET");
+
+            if (string.IsNullOrEmpty(cloudinaryConfig.CloudName) || string.IsNullOrEmpty(cloudinaryConfig.ApiKey) || string.IsNullOrEmpty(cloudinaryConfig.ApiSecret))
             {
                 throw new ArgumentException("Cloudinary account details are missing.");
             }
 
-            var account = new Account(cloudName, apiKey, apiSecret);
+            var account = new Account(cloudinaryConfig.CloudName, cloudinaryConfig.ApiKey, cloudinaryConfig.ApiSecret);
             _cloudinary = new Cloudinary(account);
         }
 
@@ -54,6 +57,13 @@ namespace api.Karim_eshop.Business.Service
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result;
+        }
+
+        private class CloudinaryConfig
+        {
+            public string CloudName { get; set; }
+            public string ApiKey { get; set; }
+            public string ApiSecret { get; set; }
         }
     }
 }

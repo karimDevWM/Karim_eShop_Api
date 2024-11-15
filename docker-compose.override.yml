@@ -6,6 +6,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:BddConnection=Server=karim_eshop_db;User=root;Password=example;Database=karim_eshop;port=3306"
       - ASPNETCORE_URLS=http://+:80
+      - CLOUDINARY_CLOUD_NAME=duwjoidpb
+      - CLOUDINARY_API_KEY=786676975839787
+      - CLOUDINARY_API_SECRET=L81erwIt3cOgBeNyflTuYLT4bFM
     ports:
       - "8000:80"
     volumes:
