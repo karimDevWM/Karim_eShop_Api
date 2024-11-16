@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,12 @@ namespace api.Karim_eshop.Business.Service
     public class ImageService
     {
         private readonly Cloudinary _cloudinary;
+        private readonly ILogger _logger;
 
-        public ImageService(IConfiguration config)
+        public ImageService(IConfiguration config, ILogger<ImageService> logger)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
             var cloudinaryConfig = new CloudinaryConfig();
             config.GetSection("Cloudinary").Bind(cloudinaryConfig);
 
@@ -28,6 +32,8 @@ namespace api.Karim_eshop.Business.Service
             {
                 throw new ArgumentException("Cloudinary account details are missing.");
             }
+
+            _logger.LogInformation("cloudinary infos ", cloudinaryConfig.CloudName, cloudinaryConfig.ApiKey);
 
             var account = new Account(cloudinaryConfig.CloudName, cloudinaryConfig.ApiKey, cloudinaryConfig.ApiSecret);
             _cloudinary = new Cloudinary(account);
