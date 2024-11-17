@@ -26,7 +26,8 @@ builder.Configuration.AddJsonFile(
         $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
         optional: false,
         reloadOnChange: true
-     ).AddEnvironmentVariables();
+     )
+.AddEnvironmentVariables();
 
 if (builder.Environment.IsEnvironment("Test"))
 {
