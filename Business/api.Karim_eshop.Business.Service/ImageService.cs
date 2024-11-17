@@ -15,32 +15,41 @@ namespace api.Karim_eshop.Business.Service
     public class ImageService
     {
         private readonly Cloudinary _cloudinary;
-        private readonly ILogger _logger;
+        private readonly ILogger<ImageService> _logger;
+        private readonly string _cloudName;
+        private readonly string _apiKey;
+        private readonly string _apiSecret;
 
         public ImageService(IConfiguration config, ILogger<ImageService> logger)
         {
+
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            var cloudinaryConfig = new CloudinaryConfig();
-            config.GetSection("Cloudinary").Bind(cloudinaryConfig);
+            // Retrieve Cloudinary configuration from appsettings
+            _cloudName = config["Cloudinary:CloudName"];
+            _apiKey = config["Cloudinary:ApiKey"];
+            _apiSecret = config["Cloudinary:ApiSecret"];
 
-            //var cloudName = Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME");
-            //var apiKey = Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY");
-            //var apiSecret = Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET");
+            // Log Cloudinary account details (but never log sensitive data like ApiSecret)
+            _logger.LogInformation("Cloudinary Configuration: CloudName={CloudName}, ApiKey={ApiKey}",
+                _cloudName, _apiKey);
 
-            if (string.IsNullOrEmpty(cloudinaryConfig.CloudName) || string.IsNullOrEmpty(cloudinaryConfig.ApiKey) || string.IsNullOrEmpty(cloudinaryConfig.ApiSecret))
+            if (string.IsNullOrEmpty(_cloudName) || string.IsNullOrEmpty(_apiKey) || string.IsNullOrEmpty(_apiSecret))
             {
                 throw new ArgumentException("Cloudinary account details are missing.");
             }
 
-            _logger.LogInformation("cloudinary infos ", cloudinaryConfig.CloudName, cloudinaryConfig.ApiKey);
+            _logger.LogInformation("Cloudinary Configuration: CloudName={CloudName}, ApiKey={ApiKey}",
+            _cloudName, _apiKey);
 
-            var account = new Account(cloudinaryConfig.CloudName, cloudinaryConfig.ApiKey, cloudinaryConfig.ApiSecret);
+            var account = new Account(_cloudName, _apiKey, _apiSecret);
             _cloudinary = new Cloudinary(account);
         }
 
         public async Task<ImageUploadResult> AddImageAsync(IFormFile file)
         {
+            _logger.LogInformation("Uploading image using CloudName: {CloudName}", _cloudName);
+            _logger.LogInformation("Uploading image using ApiKey: {ApiKey}", _apiKey);
             var uploadResult = new ImageUploadResult();
 
             if (file.Length > 0)
@@ -63,13 +72,6 @@ namespace api.Karim_eshop.Business.Service
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result;
-        }
-
-        private class CloudinaryConfig
-        {
-            public string CloudName { get; set; }
-            public string ApiKey { get; set; }
-            public string ApiSecret { get; set; }
         }
     }
 }
