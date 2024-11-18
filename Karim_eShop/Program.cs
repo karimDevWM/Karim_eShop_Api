@@ -22,12 +22,12 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
 
-builder.Configuration.AddJsonFile(
-        $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
-        optional: false,
-        reloadOnChange: true
-     )
-.AddEnvironmentVariables();
+//builder.Configuration.AddJsonFile(
+//        $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
+//        optional: false,
+//        reloadOnChange: true
+//     )
+//.AddEnvironmentVariables();
 
 if (builder.Environment.IsEnvironment("Test"))
 {
@@ -53,6 +53,13 @@ else
 
     builder.Services.ConfigureInjectionDependencyService();
 }
+
+builder.Services.Configure<CloudinarySettings>(options =>
+{
+    options.CloudName = builder.Configuration["CLOUDINARY_CLOUD_NAME"];
+    options.ApiKey = builder.Configuration["CLOUDINARY_API_KEY"];
+    options.ApiSecret = builder.Configuration["CLOUDINARY_API_SECRET"];
+});
 
 builder.Services.AddAutoMapper(typeof(Program));
 
