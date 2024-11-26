@@ -431,3 +431,4 @@ FodyWeavers.xsd
 /Karim_eShop/.env
 docker-compose.override.yml
 docker-compose.yml
+/.env
