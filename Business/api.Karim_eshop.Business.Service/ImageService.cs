@@ -1,4 +1,5 @@
-﻿using CloudinaryDotNet;
+﻿using api.Karim_eshop.Business.Service.Contract;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace api.Karim_eshop.Business.Service
 {
-    public class ImageService
+    public class ImageService : IImageService
     {
         private readonly Cloudinary _cloudinary;
         private readonly ILogger<ImageService> _logger;

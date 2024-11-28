@@ -40,6 +40,7 @@ namespace api.Karim_eshop.IoC.Tests
         {
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IImageService, ImageService>();
 
             return services;
         }
