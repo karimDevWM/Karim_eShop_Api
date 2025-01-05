@@ -38,6 +38,7 @@ namespace api.Karim_eshop.IoC.Application
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IImageService, ImageService>();
 
             return services;
         }
